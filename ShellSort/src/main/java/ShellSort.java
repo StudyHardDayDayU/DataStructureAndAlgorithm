@@ -7,7 +7,7 @@ public class ShellSort {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
 
 //        ShellSort1(arr);
-        ShellSort2(arr);
+//        ShellSort2(arr);
     }
 
     // 希尔排序 - 交换法
@@ -22,14 +22,7 @@ public class ShellSort {
         for (int gap = arr.length / 2; gap > 0; gap /= 2) {
             // i初始等于步长，i-步长就是j的初始值，每次递增1
             for (int i = gap; i < arr.length; i++) {
-
-//                if (arr[i] < arr[i-gap]){
-//                    temp = arr[i];
-//                    arr[i] = arr[i-gap];
-//                    arr[i-gap] = temp;
-//                }
-                
-//                 最后为什么要减去步长？因为要退出循环  0 1 2 3 4 5 6 7 8 9
+                // 最后为什么要减去步长？因为要退出循环  0 1 2 3 4 5 6 7 8 9
                 for (int j = i - gap; j >= 0; j -= gap) {
                     if (arr[j] > arr[j + gap]) {
                         temp = arr[j + gap];
@@ -37,7 +30,6 @@ public class ShellSort {
                         arr[j] = temp;
                     }
                 }
-
             }
         }
 
@@ -60,10 +52,6 @@ public class ShellSort {
                         j -= gap;
                     }
                     arr[j] = temp;
-
-//                    int k = arr[j-gap];
-//                    arr[j-gap] = arr[j];
-//                    arr[j] = k;
                 }
             }
         }
