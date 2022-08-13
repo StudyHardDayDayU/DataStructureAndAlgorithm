@@ -19,7 +19,9 @@ public class InsertSort {
 
             // 如果出来了，说明找到了插入的位置，且(insertIndex + 1)就是插入位置
             // 因为insertIndex是插入位置前一个元素的索引嘛
-            arr[insertIndex + 1] = insertValue;
+            if (insertIndex + 1 == i) {
+                arr[insertIndex + 1] = insertValue;
+            }
         }
 
         for (int i = 0; i < arr.length; i++) {
