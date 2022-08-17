@@ -8,4 +8,5 @@
 
 更改mid为
 
-`mid = `
+`mid = low + fib[k-1] - 1`
+
