@@ -13,6 +13,7 @@ public class HashTable {
         while (true) {
             System.out.println("add:添加雇员");
             System.out.println("list:展示所有雇员");
+            System.out.println("find:查找雇员");
             System.out.println("exit:退出");
 
             key = scanner.next();
@@ -30,6 +31,11 @@ public class HashTable {
 
                 case "list":
                     hashtab.list();
+                    break;
+                case "find":
+                    System.out.println("请输入需要查找的ID");
+                    id = scanner.nextInt();
+                    hashtab.searchById(id);
                     break;
                 case "exit":
                     scanner.close();
@@ -50,7 +56,7 @@ class hashTab {
         this.size = size;
         empLinkedLists = new EmpLinkedList[size];
         // 初始化每一个链表
-        for (int i=0; i<size;i++) {
+        for (int i = 0; i < size; i++) {
             empLinkedLists[i] = new EmpLinkedList();
         }
     }
@@ -68,7 +74,22 @@ class hashTab {
     // 遍历链表
     public void list() {
         for (int i = 0; i < empLinkedLists.length; i++) {
-            empLinkedLists[i].list();
+            empLinkedLists[i].list(i);
+        }
+    }
+
+    // 根据ID查找雇员
+    public void searchById(int id) {
+        // 要查找的ID对应哪儿一个链表
+        int index = hash(id);
+        // 调用查找函数
+        Emp emp = empLinkedLists[index].searchById(id);
+        // 那么找没找到呢
+        if (emp == null ){
+            System.out.println("表中未存储此雇员的信息");
+            return;
+        } else {
+            System.out.println("ID:" + emp.id + " name:" + emp.name);
         }
     }
 }
@@ -114,30 +135,54 @@ class EmpLinkedList {
     }
 
     // 遍历链表
-    public void list() {
+    public void list(int no) {
         // 如果当前链表为空
         if (head == null) {
-            System.out.println("当前链表为空！");
+            System.out.println("第" + (no + 1) + "链表为空！");
             return;
         }
-        System.out.println("当前链表存储内容：");
+        System.out.println("第" + (no + 1) + "链表内容为：");
         // 创建一个辅助节点，因为头节点是不能动的
         Emp current = head;
 
         while (true) {
             // 这是为了避免重复打印
             if (current == head) {
-                System.out.print("ID: " + current.id + ",name: " + current.name);
+                System.out.print("ID: " + current.id + ",name: " + current.name + " ");
             }
-            System.out.print("-->" + "ID: " + current.id + ",name: " + current.name);
 
             // 如果已经找到了最后一个
             if (current.next == null) {
                 break;
             }
+            System.out.print("--> " + "ID:" + current.id + ",name:" + current.name + " ");
             current = current.next;
         }
 
         System.out.println("");
+    }
+
+    // 根据ID查找雇员信息
+    public Emp searchById(int id) {
+        // 查看是否为空
+        if (head == null) {
+            System.out.println("链表为空");
+            return null;
+        }
+        // 创建辅助指针
+        Emp current = head;
+
+        while (true) {
+            if (current.id == id) {
+                break;
+            }
+            if (current.next == null) {
+                current = null;
+                break;
+            }
+            current = current.next;
+        }
+
+        return current;
     }
 }
